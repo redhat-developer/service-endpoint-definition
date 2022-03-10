@@ -8,4 +8,8 @@ OpenShift SBO 1.0 was released end of 2021 and the Service Binding Spec 1.0 was 
 # SEDs as helm charts
 This project will deliver SEDs as helm charts. The requirements of the helm charts are as follows:
 1. Chart delivers a secret the follows the service binding spec.
-1. Chart has a test that can verify the health of the SED being defined 
+1. Chart has a test that can verify the health of the SED being defined.
+
+# Not a helm chart repository
+
+The aim with this repo is not to create a helm chart reprository, but to create an environment for peer review of SEDs helm charts. Once the chart is developmed it will be mantianed here, but the releases of the chart will happend on helm chart repositories such as the [OpenShift Helm Chart Reporitory](https://github.com/openshift-helm-charts/charts)
