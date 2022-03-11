@@ -1,0 +1,15 @@
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: "io.servicebinding.{{ .Release.Name }}"
+type: servicebinding.io/elasticsearch
+stringData:
+  type: elasticsearch
+  provider: redhat
+  host: "{{ .Values.elasticsearch.sed.hostname }}"
+  port: {{ .Values.elasticsearch.sed.port | quote }}
+  cluster: "{{ .Values.elasticsearch.sed.cluster }}"
+  user: "{{ .Values.elasticsearch.sed.user }}"
+  password: "{{ .Values.elasticsearch.sed.password }}"
+

@@ -1,0 +1,8 @@
+elasticsearch:
+  sed:
+    hostname: myhostname
+    port: 9200
+    cluster: mycluster
+    user: user
+    password: password
+clusterHealthCheckParams: "wait_for_status=green&timeout=1s"
