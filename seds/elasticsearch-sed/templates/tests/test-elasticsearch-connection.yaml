@@ -40,5 +40,7 @@ spec:
       - "-c"
       - |
         #!/usr/bin/env bash -e
+        curl -XPUT -u $ELASTICSEARCH_USER:$ELASTICSEARCH_PASSWORD "$ELASTICSEARCH_HOST:$ELASTICSEARCH_PORT/test_index?pretty"
         curl -XGET -u $ELASTICSEARCH_USER:$ELASTICSEARCH_PASSWORD $ELASTICSEARCH_HOST:$ELASTICSEARCH_PORT/_cluster/health?'{{ .Values.clusterHealthCheckParams }}'
+        curl -XDELETE -u $ELASTICSEARCH_USER:$ELASTICSEARCH_PASSWORD "$ELASTICSEARCH_HOST:$ELASTICSEARCH_PORT/test_index"
   restartPolicy: Never
