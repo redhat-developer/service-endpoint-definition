@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name:  "io.servicebinding.{{ .Release.Name }}"
+type: servicebinding.io/redis
+stringData:
+  type: redis
+  provider: redhat
+  host: "{{ .Values.redis.sed.hostname }}"
+  password: "{{ .Values.redis.sed.password }}"

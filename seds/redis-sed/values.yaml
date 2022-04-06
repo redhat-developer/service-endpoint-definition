@@ -1,0 +1,6 @@
+redis:
+  sed:
+    hostname: myredis-master
+    password: amfGAXXlA6
+
+
