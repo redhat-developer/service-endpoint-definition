@@ -1,0 +1,12 @@
+apiVersion: v2
+name: elasticsearch-sed
+description: A Helm chart for Elasticsearch Service Endpoint Definition (SED)
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+kubeVersion: ">=1.20.0"
+annotations:
+  charts.openshift.io/provider: RedHat
+  charts.openshift.io/name: Elasticsearch Service Endpoint Definition (SED)
+  charts.openshift.io/supportURL: https://github.com/redhat-developer/service-endpoint-definition
+  charts.openshift.io/archs: x86_64

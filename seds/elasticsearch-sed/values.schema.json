@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "required": [
+    "elasticsearch"
+  ],
+  "properties": {
+    "elasticsearch": {
+      "type": "object",
+      "required": [
+        "sed"
+      ],
+      "properties": {
+        "sed": {
+          "type": "object",
+          "required": [
+            "hostname",
+            "port",
+            "cluster",
+            "user",
+            "password"
+          ],
+          "properties": {
+            "hostname": {
+              "type": "string",
+              "pattern": "^[a-z0-9-_./]+$"
+            },
+            "port": {
+              "type": "integer"
+            },
+            "cluster": {
+              "type": "string",
+              "pattern": "^[a-z0-9-_./]+$"
+            },
+            "user": {
+              "type": "string",
+              "pattern": "^[a-z0-9-_./]+$"
+            },
+            "password": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
