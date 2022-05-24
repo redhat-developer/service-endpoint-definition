@@ -1,21 +1,21 @@
 # Service Endpoint Definition
-This is the repository to share service endpoint definitions (SEDs). SEDs are secrets containing Service Specific information such as endpoints and credentials. These secrets can be bound to running kubernetes workolads so that they are able to connect to the service they represent.
+This is the repository to share service endpoint definitions (SEDs). SEDs are secrets containing service-specific information such as endpoints and credentials. These secrets can be bound to running Kubernetes workloads so that they can connect to the service they represent.
 
-Kubernetes workloads often depend on one or more cloud services. While services could be running on the local cluster, they could also be running on remote clusters and public cloud providers. The introduction of [Service Binding Operator](https://github.com/redhat-developer/service-binding-operator) kick-started an effort to standardize the way OpenShift workloads bind with cloud services. Service Binding Operator implements the [Service Binding specification](https://github.com/servicebinding/spec#service-binding-specification-for-kubernetes) which defines the standard for both service providers and application developers to follow to easily connect workloads to services. The end goal is for each service provider to develop Kubernetes controllers that define the abstraction of their services in Kubernetes through custom resource definitions (CRDs) that define their Service Instance Types (SITs). According to the Service Binding specification, these SITs are spec-compliant if they provide a reference to a secret that contains the Service Endpoint Definition (SED). With spec-compliant SITs, application developers will have a standard way to read the SED data into their workload. When an SIT makes a reference to the SED as per the specification, the controller implements [Provisioned Service](https://github.com/servicebinding/spec#provisioned-service) method to enable services to be bindable.
+Kubernetes workloads often depend on one or more cloud services. While services could be running on the local cluster, they could also be running on remote clusters and public cloud providers. The introduction of [Service Binding Operator](https://github.com/redhat-developer/service-binding-operator) kick-started an effort to standardize the way OpenShift workloads bind with cloud services. Service Binding Operator implements the [Service Binding specification](https://github.com/servicebinding/spec#service-binding-specification-for-kubernetes) which defines the standard for both service providers and application developers to follow to easily connect workloads to services. The end goal is for each service provider to develop Kubernetes controllers that define the abstraction of their services in Kubernetes through custom resource definitions (CRDs) that define their Service Instance Types (SITs). According to the Service Binding specification, these SITs are spec-compliant if they provide a reference to a secret that contains the Service Endpoint Definition (SED). With spec-compliant SITs, application developers will have a standard way to read the SED data into their workload. When an SIT makes a reference to the SED as per the specification, the controller implements the [Provisioned Service](https://github.com/servicebinding/spec#provisioned-service) method to enable services to be bindable.
 
 Service Binding Operator 1.0 was released at the end of 2021 and the Service Binding Spec 1.0 was released at the beginning of 2022. Although there have been some early efforts to support the concept of Provisioned Service, the adoption of the Service Binding specification is still in the bootstrap stage. There are still multiple service providers that have not yet implemented the provisioned service concept leaving application developers wondering how they can start implementing the standard on their side. To cover that transition the Service Binding specification also introduces the concept of [direct secret reference](https://github.com/servicebinding/spec#direct-secret-reference), which allows SEDs to be created manually by an administrator. As service providers implement the Service Binding specification, developers can start implementing their workloads to read data from these SEDs and be ready for the automation that will be available in the near future.
 
-With SEDs, an administrator can define bindable secrets that describe a service connection even if such services is not represented in the Kuberentes cluster. Examples of this type of services are services that are provisioned directly in public cloud providers. For service providers that want to implement Provisioned Services, the SEDs will serve as a guide for the type and format of data that workloads expect from their services when using Service Bindings. On the other hand, the application providers will be able to use SEDs to bind to services that are not even repersented with Kubernetes custome resources. 
+With SEDs, an administrator can define bindable secrets that describe a service connection even if such services are not represented in the Kubernetes cluster. For example, services that are provisioned directly by public cloud providers. When implementing provisioned services, the SEDs serve as a guide for service providers by providing secrets for the type and format of data that workloads expect from their services when using service bindings. In addition, the application providers can use SEDs to bind to services that are not even represented with Kubernetes custom resources. 
 
 # SEDs as helm charts
 This project will deliver SEDs as Helm charts. The requirements of the Helm charts are as follows:
 1. Chart delivers a secret that follows the Service Binding specification for a specific cloud service.
-1. Chart has a test that can verify the health of the service represented by the SED being defined. See [Helm Chart Tests](https://helm.sh/docs/topics/chart_tests/) for more details and examples on how to implement a Helm test.
+2. Chart has a test that can verify the health of the service represented by the SED being defined. See [Helm Chart Tests](https://helm.sh/docs/topics/chart_tests/) for more details and examples on how to implement a Helm test.
 
 
 NOTE:
 
-The aim of this repo is not to create a Helm chart repository, but to create an environment for peer review of SED Helm charts. After the chart is developed it will be maintained here, but the releases of the chart will happen on Helm chart repositories such as the [OpenShift Helm Chart Repository](https://github.com/openshift-helm-charts/charts). The OpenShift Helm Chart Repository is not only a Helm repository but also a Red Hat Helm chart certification flow that verifies whether your charts can run properly on the OpenShift Container Platform (OCP) clusters.
+This repository is not intended to create a Helm chart repository. The aim of this repository is to create an environment for the peer review of SED Helm charts. After the chart is developed, it will be maintained here. But the releases of the chart will happen on Helm chart repositories such as the OpenShift Helm Chart Repository. The OpenShift Helm Chart Repository is both a Helm repository and a Red Hat Helm chart certification flow that verifies whether your charts can run properly on OpenShift Container Platform (OCP) clusters.
 
 # Using the SED chart to connect your workload to the backing service
 
@@ -23,7 +23,7 @@ As a cluster administrator, you can use the SED chart to connect your workload t
 
 Prerequisites:
 
-- The SED chart is published on a Helm Chart Repository such as [Helm Chart Repository Index](https://charts.openshift.io/index.yaml)
+- The SED chart is published on a Helm Chart Repository such as [Helm Chart Repository Index](https://charts.openshift.io/index.yaml).
 - You have created a workload that can read data projected from the secrets as volumes.
 - You have installed the Service Binding Operator from the OperatorHub.
 
@@ -73,7 +73,7 @@ postgresql:
 helm show values openshift-helm-charts/redhat-psql-sed > values.yaml
 ```
 
-4. Edit the local `values.yaml` file with the service information you gathered.
+4. Edit the local `values.yaml` file to override the default values with the service information you gathered.
 
 5. Deploy the PostgreSQL SED. For example, for the psql-sed Helm chart, run the following command:
 
@@ -159,7 +159,7 @@ oc apply -f psql-sbo.yaml
 servicebinding.servicebinding.io/psql-service-ssm-app created
 ```
 
-After applying the `psql-sbo` CR, assuming that there is already a `ssm-bee` deployment in your namespace and Service Binding Operator installed, Service Binding Operator projects the binding data to your deployment.
+After applying the `psql-sbo` CR, assuming that there is already a `ssm-bee` deployment in your namespace and Service Binding Operator installed, the Service Binding Operator projects the binding data to your deployment.
 
 10. To verify that the binding has occurred, check the volumes and volume mounts sections under the `spec` field of your deployment. 
 
@@ -178,7 +178,7 @@ oc get deployment ssm-bee -o yaml
             defaultMode: 420
 ```
 
-The output verifies that the io.servicebinding.my-psql-sed secret has been mounted and the binding has occurred.
+The output verifies that the `io.servicebinding.my-psql-sed` secret has been mounted and the binding has occurred.
 
 11. Verify the status of your `ServiceBinding` instance. It shows that all conditions under status has the `status` field set to true:
 
@@ -210,4 +210,4 @@ status:
       type: Ready
 ```
 
-The output verifies that all conditions under the status field have their status field set to True. The output establishes that all the values from the secret are projected as binding data into the ssm-bee deployment and the workload is now connected to the backing service.
+The output verifies that all conditions under the `status` field have their `status` field set to `True`. The output establishes that all the values from the secret are projected as binding data into the `ssm-bee` deployment and the workload is now connected to the backing service.
